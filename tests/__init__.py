@@ -1,14 +1,14 @@
-import unittest
+import pytest
 
 from bogus import load
 
-__all__ = ["BaseTestCase"]
+__all__ = ["TestModel"]
 
 
-class BaseTestCase(unittest.TestCase):
+class TestModel:
 
-    def setUp(self):
-        self.emulator = load(type(self).MODEL)()
+    MODEL = None
 
-    def dispatch(self, message):
-        return self.emulator.dispatch(message)
+    @pytest.fixture()
+    def e(self):
+        yield load(type(self).MODEL)()

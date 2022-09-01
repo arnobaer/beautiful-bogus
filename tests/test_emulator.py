@@ -1,9 +1,7 @@
-import unittest
-
 from bogus.emulator import Property, Route, Emulator
 
 
-class EmulatorTest(unittest.TestCase):
+class TestEmulator:
 
     def test_basic(self):
         e = Emulator()
@@ -16,8 +14,8 @@ class EmulatorTest(unittest.TestCase):
         e.add_route(r"^VOLT\?$", e.voltage)
         e.add_route(r"^VOLT\s(.+)$", e.voltage)
 
-        self.assertEqual(e.dispatch("VOLT?"), "+0.000E+00")
-        self.assertEqual(e.dispatch("VOLT 42"), None)
-        self.assertEqual(e.dispatch("VOLT?"), "+4.200E+01")
-        self.assertEqual(e.dispatch("*RST"), None)
-        self.assertEqual(e.dispatch("VOLT?"), "+0.000E+00")
+        assert e.dispatch("VOLT?") == "+0.000E+00"
+        assert e.dispatch("VOLT 42") is None
+        assert e.dispatch("VOLT?") == "+4.200E+01"
+        assert e.dispatch("*RST") is None
+        assert e.dispatch("VOLT?") == "+0.000E+00"
